@@ -53,3 +53,8 @@ module.export = {
 };
 
 ```
+
+## webpackのmodulesが解決できない
+
+webpackでaliasの設定するのはやめてbabelで指定する必要があります。  
+[`babel-plugin-module-resolver`](https://github.com/tleunen/babel-plugin-module-resolver)を使用すると解決できます。
