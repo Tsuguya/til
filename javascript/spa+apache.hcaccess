@@ -1,0 +1,122 @@
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule .* https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html
+
+# Brotli
+RewriteCond %{HTTP:Accept-Encoding} br
+RewriteCond %{REQUEST_URI} \.(html|css|js|ico|xml|json|svg|webmanifest)$
+RewriteCond %{REQUEST_FILENAME}\.br -s
+RewriteRule .* %{REQUEST_URI}.br [L]
+
+<Files *.html.br>
+    Header set Content-Encoding br
+    ForceType text/html;charset=utf-8
+</Files>
+
+<Files *.css.br>
+    Header set Content-Encoding br
+    ForceType text/css;charset=utf-8
+</Files>
+
+<Files *.css.map.br>
+    Header set Content-Encoding br
+    ForceType text/css;charset=utf-8
+</Files>
+
+<Files *.js.br>
+    Header set Content-Encoding br
+    ForceType application/javascript;charset=utf-8
+</Files>
+
+<Files *.js.map.br>
+    Header set Content-Encoding br
+    ForceType application/javascript;charset=utf-8
+</Files>
+
+<Files *.ico.br>
+    Header set Content-Encoding br
+    ForceType image/vnd.microsoft.icon
+</Files>
+
+<Files *.xml.br>
+    Header set Content-Encoding br
+    ForceType text/xml
+</Files>
+
+<Files *.json.br>
+    Header set Content-Encoding br
+    ForceType application/json
+</Files>
+
+<Files *.svg.br>
+    Header set Content-Encoding br
+    ForceType image/svg+xml
+</Files>
+
+<Files *.webmanifest.br>
+    Header set Content-Encoding br
+    ForceType application/manifest+json
+</Files>
+
+# gzip
+RewriteCond %{HTTP:Accept-Encoding} gzip
+RewriteCond %{REQUEST_URI} \.(html|css|js|ico|xml|json|svg|webmanifest)$
+RewriteCond %{REQUEST_FILENAME}\.gz -s
+RewriteRule .* %{REQUEST_URI}.gz [L]
+
+<Files *.html.gz>
+    Header set Content-Encoding gzip
+    ForceType text/html;charset=utf-8
+</Files>
+
+<Files *.css.gz>
+    Header set Content-Encoding gzip
+    ForceType text/css;charset=utf-8
+</Files>
+
+<Files *.css.map.gz>
+    Header set Content-Encoding gzip
+    ForceType text/css;charset=utf-8
+</Files>
+
+<Files *.js.gz>
+    Header set Content-Encoding gzip
+    ForceType application/javascript;charset=utf-8
+</Files>
+
+<Files *.js.map.gz>
+    Header set Content-Encoding gzip
+    ForceType application/javascript;charset=utf-8
+</Files>
+
+<Files *.ico.gz>
+    Header set Content-Encoding gzip
+    ForceType image/vnd.microsoft.icon
+</Files>
+
+<Files *.xml.gz>
+    Header set Content-Encoding gzip
+    ForceType text/xml
+</Files>
+
+<Files *.json.gz>
+    Header set Content-Encoding gzip
+    ForceType application/json
+</Files>
+
+<Files *.svg.gz>
+    Header set Content-Encoding gzip
+    ForceType image/svg+xml
+</Files>
+
+<Files *.webmanifest.gz>
+    Header set Content-Encoding gzip
+    ForceType application/manifest+json
+</Files>
+
+<FilesMatch "\.(html|css|js|ico|xml|json|svg|webmanifest)(\.gz|\.br)?$">
+    Header append Vary Accept-Encoding
+</FilesMatch>
